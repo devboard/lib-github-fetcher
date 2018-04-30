@@ -13,9 +13,17 @@ jobs:
           name: Disable xdebug
           command: ./etc/circleci2/disable-xdebug.sh
 
+      - restore_cache:
+          key: cache-v10-{{ checksum "composer.lock" }}
+
       - run:
           name: Composer install
           command: composer install --prefer-dist --no-interaction
+
+      - save_cache:
+          key: cache-v10-{{ checksum "composer.lock" }}
+          paths:
+            - /var/www/vendor
 
       - run:
           name: PHPSpec
@@ -63,12 +71,11 @@ jobs:
     workDir: /var/www
     steps:
       - checkout
+      - restore_cache:
+          key: cache-v10-{{ checksum "composer.lock" }}
       - run:
           name: Composer install
           command: composer install --prefer-dist --no-interaction
-      - run:
-          name: Composer install
-          command: composer install --no-interaction
       - run:
           name: Composer dump autoload (bug on autoload)
           command: composer dump-autoload -o
@@ -85,6 +92,8 @@ jobs:
     workDir: /var/www
     steps:
       - checkout
+      - restore_cache:
+          key: cache-v10-{{ checksum "composer.lock" }}
       - run:
           name: Composer install
           command: composer install --no-interaction
