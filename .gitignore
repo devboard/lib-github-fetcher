@@ -1,0 +1,22 @@
+/composer.lock
+/composer.phar
+/vendor/
+
+#PHPStorm folder
+/.idea
+
+#backup files from unix editors
+*~
+
+#merge files
+*.orig
+
+#Ignoring MacDS_Store files
+.DS_Store
+
+#ignore tmp folder
+/tmp
+
+#Ignore phar files in root
+/*.phar
+

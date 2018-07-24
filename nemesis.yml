@@ -1,0 +1,25 @@
+paths:
+  code:
+    "src/": "DevboardLib\\GitHubWebhook\\"
+  spec:
+    "spec/": "spec\\DevboardLib\\GitHubWebhook\\"
+  tests:
+    "tests/": "Tests\\DevboardLib\\GitHubWebhook\\"
+phpunit:
+  base_namespace: Tests
+  base_test_class_name: PHPUnit\Framework\TestCase
+  ignore_instances_of:
+    - Symfony\Component\Console\Command\Command
+    - Symfony\Component\DependencyInjection\Extension\Extension
+  ignore_interfaces:
+    - Behat\Behat\Context\Context
+    - Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface
+extensions:
+  NullDev\Skeleton\SkeletonExtension: ~
+  NullDev\BroadwaySkeleton\BroadwaySkeletonExtension: ~
+  NullDev\Theater\TheaterExtension: ~
+  NullDevelopment\Skeleton\SkeletonExtension: ~
+  NullDevelopment\SkeletonSourceCodeExtension\SkeletonSourceCodeExtension: ~
+  NullDevelopment\SkeletonPhpSpecExtension\SkeletonPhpSpecExtension: ~
+  NullDevelopment\SkeletonPhpUnitExtension\SkeletonPhpUnitExtension: ~
+  NullDevelopment\SkeletonBroadwayExtension\SkeletonBroadwayExtension: ~

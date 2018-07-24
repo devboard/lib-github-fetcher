@@ -1,0 +1,119 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: msvrtan/square:0.2.2
+    working_directory: /var/www
+    parallel: 1
+    steps:
+      - checkout
+
+      - run:
+          name: Disable xdebug
+          command: ./etc/circleci2/disable-xdebug.sh
+
+      - run:
+          name: Composer install
+          command: composer install --prefer-dist --no-interaction
+
+      - run:
+          name: PHPSpec
+          command: ./vendor/bin/phpspec run
+
+      - run:
+          name: PHPUnit
+          command: ./vendor/bin/phpunit
+
+      - run:
+          name: PHPStan
+          command: ./vendor/bin/phing phpstan
+
+      - run:
+          name: Code standards
+          command: ./vendor/bin/phing check-codestandards
+
+  deprecations_check:
+    docker:
+      - image: msvrtan/square:0.2.2
+    working_directory: /var/www
+    parallel: 1
+    steps:
+      - checkout
+
+      - run:
+          name: Disable xdebug
+          command: ./etc/circleci2/disable-xdebug.sh
+
+      - run:
+          name: Composer install
+          command: composer install --prefer-dist --no-interaction
+
+      - run:
+          name: Add phpstan deprecation rules
+          command: sed -i.bak $'s/includes:/includes:\\\n\t- vendor\/phpstan\/phpstan-deprecation-rules\/rules.neon/g' phpstan.neon
+
+      - run:
+          name: PHPStan
+          command: ./vendor/bin/phing phpstan
+
+  infection:
+    docker:
+      - image: msvrtan/square:0.2.1
+    workDir: /var/www
+    steps:
+      - checkout
+      - run:
+          name: Composer install
+          command: composer install --prefer-dist --no-interaction
+      - run:
+          name: Composer install
+          command: composer install --no-interaction
+      - run:
+          name: Composer dump autoload (bug on autoload)
+          command: composer dump-autoload -o
+      - run:
+          name: Infection
+          command: ./vendor/bin/infection
+      - store_artifacts:
+          path: build
+          destination: build
+
+  codecoverage_phpunit:
+    docker:
+      - image: msvrtan/square:0.2.1
+    workDir: /var/www
+    steps:
+      - checkout
+      - run:
+          name: Composer install
+          command: composer install --no-interaction
+      - run:
+          name: Composer dump autoload (bug on autoload)
+          command: composer dump-autoload -o
+      - run:
+          name: PHPUnit
+          command: ./vendor/bin/phpunit --fail-on-warning --log-junit build/phpunit/junit.xml
+      - run:
+          name: Ship codecoverage to codecov.io
+          command: bash <(curl -s https://codecov.io/bash)
+      - type: artifacts-store
+        path: build
+        destination: build
+      - store_test_results:
+          path: build
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deprecations_check:
+         requires:
+           - build
+      - infection:
+         requires:
+           - build
+      - codecoverage_phpunit:
+         requires:
+           - build

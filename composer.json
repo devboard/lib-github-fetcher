@@ -1,0 +1,58 @@
+{
+    "name": "devboard/lib-github-fetcher",
+    "description": "Devboard lib for GitHub fetch results",
+    "type": "project",
+    "license": "proprietary",
+    "repositories": [
+        {
+            "type": "vcs",
+            "comment": "Adding my own multiline fixers",
+            "url": "https://github.com/msvrtan/PHP-CS-Fixer.git"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "devboard/git-interfaces": "^2.0",
+        "devboard/github-api": "^2.0",
+        "devboard/lib-generix": "^2.0",
+        "devboard/lib-git": "^2.0",
+        "devboard/lib-github": "^2.0",
+        "myclabs/php-enum": "^1.5",
+        "webmozart/assert": "^1.2"
+    },
+    "require-dev": {
+        "ciaranmcnulty/phpspec-typehintedmethods": "^4.0",
+        "friendsofphp/php-cs-fixer": "dev-long-line-fixers2",
+        "infection/infection": "^0.9@dev",
+        "mockery/mockery": "^1.0",
+        "phing/phing": "^2.16",
+        "phpmd/phpmd": "^2.6",
+        "phpspec/phpspec": "^5.0",
+        "phpstan/phpstan": "^0.10.1",
+        "phpstan/phpstan-deprecation-rules": "^0.10.2",
+        "phpstan/phpstan-phpunit": "^0.10.0",
+        "phpstan/phpstan-strict-rules": "^0.10.0",
+        "phpstan/phpstan-webmozart-assert": "^0.10.0",
+        "phpunit/phpunit": "^7.0",
+        "slevomat/coding-standard": "^4.0",
+        "squizlabs/php_codesniffer": "^3.1"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "DevboardLib\\GitHubFetcher\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Data\\DevboardLib\\GitHubFetcher\\": "data/",
+            "spec\\DevboardLib\\GitHubFetcher\\": "spec/",
+            "Tests\\DevboardLib\\GitHubFetcher\\": "tests/"
+        }
+    }
+}
