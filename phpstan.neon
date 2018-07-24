@@ -1,6 +1,17 @@
 parameters:
 	bootstrap: tests/bootstrap.php
 	ignoreErrors:
+		- '#Parameter \#1 \$json of function json_decode expects string, string|false given.#'
+		- '#Call to an undefined static method DevboardLib\\GitHub\\Account\\AccountType::USER()#'
+		- '#Call to an undefined static method DevboardLib\\GitHub\\Milestone\\MilestoneState::OPEN().#'
+		- '#Call to an undefined static method DevboardLib\\GitHub\\PullRequestReview\\PullRequestReviewState::APPROVED().#'
+		- '#Call to static method Webmozart\\Assert\\Assert::allIsInstanceOf\(\) .* will always evaluate to true.#'
+		- '#Method DevboardLib\\GitHubFetcher\\Result\\RepositoryBranches\\Payload\\CommitAuthor::deserialize\(\) has no return typehint specified.#'
+		- '#Method DevboardLib\\GitHubFetcher\\Result\\RepositoryBranches\\Payload\\CommitCommitter::deserialize\(\) has no return typehint specified.#'
+		- '#Parameter .* \$userId of class .* constructor expects DevboardLib\\GitHub\\User\\UserId, DevboardLib\\GitHub\\Account\\AccountId given.#'
+		- '#Parameter .* \$login of class .* constructor expects DevboardLib\\GitHub\\User\\UserLogin, DevboardLib\\GitHub\\Account\\AccountLogin given.#'
+		- '#Parameter .* \$avatarUrl of class .* constructor expects DevboardLib\\GitHub\\User\\UserAvatarUrl, DevboardLib\\GitHub\\Account\\AccountAvatarUrl given.#'
+		- '#Method DevboardLib\\GitHubFetcher\\Result\\RepositoryPullRequests\\Payload\\PullRequest::deserialize\(\) has no return typehint specified.#'
 includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 	- vendor/phpstan/phpstan-phpunit/rules.neon
