@@ -31,6 +31,11 @@ class InstallationRepositoriesResult implements GitHubFetcherResult
         $this->payload        = $payload;
     }
 
+    public function getInstallationId(): InstallationId
+    {
+        return $this->installationId;
+    }
+
     public function getUserId(): UserId
     {
         return $this->userId;
